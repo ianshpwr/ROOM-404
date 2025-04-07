@@ -1,7 +1,5 @@
 
 import { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Shield, Eye, EyeOff, LogIn, UserPlus } from 'lucide-react';
 
 interface AuthFormProps {
@@ -39,7 +37,7 @@ const AuthForm = ({
           <label htmlFor="email" className="block text-sm font-medium text-gray-300">
             IDENTIFIER
           </label>
-          <Input
+          <input
             id="email"
             type="email"
             placeholder="Enter your email"
@@ -54,7 +52,7 @@ const AuthForm = ({
             PASSKEY
           </label>
           <div className="relative">
-            <Input
+            <input
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
@@ -77,27 +75,28 @@ const AuthForm = ({
           </div>
         </div>
         
-        <Button 
+        <button 
           onClick={handleAuth} 
-          className="w-full anon-button flex items-center justify-center gap-2"
+          className="w-full anon-button"
         >
           {isRegister ? (
             <>
               <UserPlus className="h-5 w-5" />
-              REGISTER
+              <span className="ml-2">REGISTER</span>
             </>
           ) : (
             <>
               <LogIn className="h-5 w-5" />
-              LOGIN
+              <span className="ml-2">LOGIN</span>
             </>
           )}
-        </Button>
+        </button>
         
         <div className="text-center mt-4">
           <button
             onClick={() => setIsRegister(!isRegister)}
-            className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+            className="text-sm text-gray-400 hover:text-white"
+            style={{ transition: 'color 0.2s' }}
           >
             {isRegister 
               ? "Already have access? Login" 

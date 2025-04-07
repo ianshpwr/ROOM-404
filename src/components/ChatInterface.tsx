@@ -1,8 +1,5 @@
 
 import { useState, useRef, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { LogOut, Send, MessageSquare } from 'lucide-react';
 
 interface Message {
@@ -51,22 +48,21 @@ const ChatInterface = ({
 
   return (
     <div className="flex flex-col h-screen animate-fadeIn">
-      <header className="p-4 glass-panel flex justify-between items-center">
+      <header className="p-4 glass-panel flex items-center" style={{justifyContent: 'space-between'}}>
         <h1 className="text-2xl font-bold tracking-widest flex items-center">
           <MessageSquare className="mr-2 h-6 w-6" />
           ROOM-404
         </h1>
-        <Button 
+        <button 
           onClick={handleLogout}
-          variant="outline"
-          className="anon-button flex items-center gap-1"
+          className="anon-button"
         >
-          {!isMobile && "DISCONNECT"}
+          {!isMobile && <span className="mr-2">DISCONNECT</span>}
           <LogOut className="h-5 w-5" />
-        </Button>
+        </button>
       </header>
 
-      <div className="flex-1 p-4 overflow-y-auto glass-panel m-4 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+      <div className="flex-1 p-4 overflow-y-auto glass-panel m-4">
         <div className="space-y-4">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-500">
@@ -80,13 +76,12 @@ const ChatInterface = ({
               return (
                 <div 
                   key={msg.id}
-                  className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
+                  className="flex"
+                  style={{justifyContent: isCurrentUser ? 'flex-end' : 'flex-start'}}
                 >
                   <div 
                     className={`max-w-[75%] p-3 rounded-lg ${
-                      isCurrentUser 
-                        ? 'bg-room404-gray text-white rounded-tr-none' 
-                        : 'bg-room404-accent text-white rounded-tl-none'
+                      isCurrentUser ? 'user-message' : 'other-message'
                     }`}
                   >
                     <div className="text-xs text-gray-400 mb-1">
@@ -104,7 +99,7 @@ const ChatInterface = ({
 
       <div className="p-4 glass-panel m-4">
         <div className="flex gap-2">
-          <Input
+          <input
             type="text"
             placeholder="Type your message..."
             value={newMessage}
@@ -112,14 +107,15 @@ const ChatInterface = ({
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             className="input-field flex-1"
           />
-          <Button 
+          <button 
             onClick={sendMessage}
-            className="anon-button flex items-center gap-1"
+            className="anon-button"
             disabled={!newMessage.trim()}
+            style={{opacity: !newMessage.trim() ? 0.5 : 1, cursor: !newMessage.trim() ? 'not-allowed' : 'pointer'}}
           >
-            {!isMobile && "SEND"}
+            {!isMobile && <span className="mr-2">SEND</span>}
             <Send className="h-5 w-5" />
-          </Button>
+          </button>
         </div>
       </div>
     </div>

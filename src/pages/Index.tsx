@@ -3,7 +3,7 @@ import ChatApp from "@/components/ChatApp";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-room404-dark text-room404-light">
+    <div className="min-h-screen" style={{backgroundColor: "#000", color: "#FFF"}}>
       <ChatApp />
     </div>
   );

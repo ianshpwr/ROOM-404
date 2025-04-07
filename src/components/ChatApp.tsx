@@ -17,10 +17,16 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import { useToast } from "@/components/ui/use-toast";
 import IntroScreen from "./IntroScreen";
 import AuthForm from "./AuthForm";
 import ChatInterface from "./ChatInterface";
+
+// Toast replacement
+const showToast = (title: string, description: string, type: 'success' | 'error' = 'success') => {
+  console.log(`${type.toUpperCase()}: ${title} - ${description}`);
+  // In a real implementation, we would show a toast notification here
+  alert(`${title}: ${description}`);
+};
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEj5EZT8Cg4PFP13Ok0UwPwgZI60swS6A",
@@ -45,7 +51,6 @@ export default function ChatApp() {
   const [password, setPassword] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
-  const { toast } = useToast();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -75,61 +80,36 @@ export default function ChatApp() {
       });
       setNewMessage("");
     } catch (error: any) {
-      toast({
-        title: "Error sending message",
-        description: error.message,
-        variant: "destructive",
-      });
+      showToast("Error sending message", error.message, "error");
     }
   };
 
   const handleAuth = async () => {
     if (!email.trim() || !password.trim()) {
-      toast({
-        title: "Error",
-        description: "Email and password are required",
-        variant: "destructive",
-      });
+      showToast("Error", "Email and password are required", "error");
       return;
     }
     
     try {
       if (isRegister) {
         await createUserWithEmailAndPassword(auth, email, password);
-        toast({
-          title: "Account created",
-          description: "Welcome to ROOM-404",
-        });
+        showToast("Account created", "Welcome to ROOM-404", "success");
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        toast({
-          title: "Logged in",
-          description: "Access granted",
-        });
+        showToast("Logged in", "Access granted", "success");
       }
     } catch (error: any) {
-      toast({
-        title: "Authentication Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      showToast("Authentication Error", error.message, "error");
     }
   };
 
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        toast({
-          title: "Logged out",
-          description: "Session terminated",
-        });
+        showToast("Logged out", "Session terminated", "success");
       })
       .catch((error: any) => {
-        toast({
-          title: "Error logging out",
-          description: error.message,
-          variant: "destructive",
-        });
+        showToast("Error logging out", error.message, "error");
       });
   };
 
@@ -141,7 +121,7 @@ export default function ChatApp() {
   // If user not logged in, show auth form
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#000" }}>
         <AuthForm
           isRegister={isRegister}
           setIsRegister={setIsRegister}
