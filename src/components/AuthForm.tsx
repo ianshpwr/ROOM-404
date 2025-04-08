@@ -96,7 +96,7 @@ const AuthForm = ({
           <button
             onClick={() => setIsRegister(!isRegister)}
             className="text-sm text-gray-400 hover:text-white"
-            style={{ transition: 'color 0.2s' }}
+            style={{backgroundColor:"transparent", transition: 'color 0.2s',border:"none" }}
           >
             {isRegister 
               ? "Already have access? Login" 

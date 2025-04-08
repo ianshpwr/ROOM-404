@@ -24,7 +24,6 @@
 
 * {
   box-sizing: border-box;
-  border-color: var(--border);
   margin: 0;
   padding: 0;
 }
@@ -355,7 +354,6 @@ body {
 }
 
 .other-message {
-  background-color: #666666;
   color: white;
   border-top-left-radius: 0;
 }
