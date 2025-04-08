@@ -20,11 +20,8 @@ import {
 import IntroScreen from "./IntroScreen";
 import AuthForm from "./AuthForm";
 import ChatInterface from "./ChatInterface";
-
-// Toast replacement
 const showToast = (title: string, description: string, type: 'success' | 'error' = 'success') => {
   console.log(`${type.toUpperCase()}: ${title} - ${description}`);
-  // In a real implementation, we would show a toast notification here
   alert(`${title}: ${description}`);
 };
 
@@ -118,7 +115,6 @@ export default function ChatApp() {
     return <IntroScreen onIntroComplete={() => setIntroComplete(true)} />;
   }
 
-  // If user not logged in, show auth form
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#000" }}>
@@ -135,7 +131,6 @@ export default function ChatApp() {
     );
   }
 
-  // If user is logged in, show chat interface
   return (
     <ChatInterface
       messages={messages}
